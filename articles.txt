@@ -1,13 +1,11 @@
-ExampleTitle1
 **
+ExampleTitle1
 This is the content of the first article. It can contain multiple lines of text providing information or details about a particular topic.
 **
 ExampleTitle2
-**
 Here goes the content of the second article. You can add any text or information relevant to your articles.
 **
 Tre grundläggande regler för framgång
-**
 Sälj aldrig något du inte skulle vilja köpa själv
 Charlie Munger artikulerade en gång att det lättaste sättet att få vad du vill ha är att förtjäna vad du vill ha. Det är en så enkel idé. För att förtjäna vad du vill ha så bör du också skapa och jobba på produkter av sådan kvalité att du själv vill köpa den.
 
@@ -22,7 +20,6 @@ Med dessa tre enkla levnadsregler har den numera framlidne Charlie Munger levt e
 Källa https://www.cnbc.com/2023/11/29/charlie-munger-these-basic-career-rules-made-me-successful-in-life-with-warren-buffett-i-had-all-3.html
 **
 Tre tips för föräldrar som Munger vill att hans barn ska minnas till sin hundraårsdag
-**
 Att låta sina barn dra egna slutsatser
 Charlie Munger berättar om sin far som gjorde affärer med två personer. Den första var Grant. Han var en generös man med stor integritet och charm. Den andra var Mr. X. Han var oförskämd, bullrig och orättvis och när allt kommer omkring en ganska jobbig man att ha att göra med. Munger frågade sin far "Varför gör du inte bara affärer med sådana som Grant?". Hans far svarade att "Mr. X erbjuder gott om affärer och om jag endast gjorde affärer med sådana som Grant skulle det inte finnas många affärer. Munger tog intryck av detta. Det gick upp för honom att vill leva ett liv där han gör affärer med sådana som Mr. X, men väljer att vara som Grant. Munger reflekterade senare på denna lärdomen han fick av sin far. Det verkligt brillianta var inte den kloka lärdomen i sig själv utan snarare att Mungers far lät honom själv dra de viktiga slutsatserna. Mungers far hamrade inte in budskapet. Det är när människor själva får komma fram till slutsatserna som de verkligen fastnar.
 
