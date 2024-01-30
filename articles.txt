@@ -2,10 +2,8 @@
 ExampleTitle1
 This is the content of the first article. It can contain multiple lines of text providing information or details about a particular topic.
 *
-*
 ExampleTitle2
 Here goes the content of the second article. You can add any text or information relevant to your articles.
-*
 *
 Tre grundläggande regler för framgång
 Sälj aldrig något du inte skulle vilja köpa själv
@@ -20,7 +18,6 @@ Charlie Munger observerar att han kan prestera väl på en rad områden när han
 Med dessa tre enkla levnadsregler har den numera framlidne Charlie Munger levt ett långt och framgångsrikt liv.
 
 Källa https://www.cnbc.com/2023/11/29/charlie-munger-these-basic-career-rules-made-me-successful-in-life-with-warren-buffett-i-had-all-3.html
-*
 *
 Tre tips för föräldrar som Munger vill att hans barn ska minnas till sin hundraårsdag
 Att låta sina barn dra egna slutsatser
