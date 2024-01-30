@@ -77,13 +77,13 @@
             var blogPostsContainer = document.getElementById('blogPosts');
             blogPostsContainer.innerHTML = '';
 
-            var postsArray = postsText.split('\n\n');
-            
+            var postsArray = postsText.split('-\n'); // Split posts using the hyphen and newline
+
             postsArray.forEach(function(post, index) {
                 // Split post into title and body
                 var lines = post.split('\n');
                 var postTitle = lines[0];
-                var postBody = lines.slice(1).join('\n');
+                var postBody = lines.slice(2).join('\n'); // Start from the third line to skip the blank line
 
                 var postDiv = document.createElement('div');
                 postDiv.className = 'article';
