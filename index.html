@@ -51,8 +51,8 @@ fetch('articles.txt')
       title.classList.add('article-title');
       content.classList.add('article-content');
 
-      title.innerHTML = articleArray[i].trim();
-      content.innerHTML = articleArray[i + 1].trim().replace(/\n/g, '<br>'); // Preserve line breaks
+      title.innerHTML = articleArray[i + 1].trim(); // Use i+1 for titles
+      content.innerHTML = articleArray[i].trim().replace(/\n/g, '<br>'); // Use i for content
 
       title.addEventListener('click', () => {
         content.classList.toggle('active');
