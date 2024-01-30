@@ -28,8 +28,8 @@
 fetch('articles.txt')
   .then(response => response.text())
   .then(articles => {
-    // Split articles using asterisk (*) as separator
-    const articleArray = articles.split('*').filter(Boolean);
+    // Split articles using double asterisk (**) as separator
+    const articleArray = articles.split('**').filter(Boolean);
 
     // Create HTML for each article
     const blogContainer = document.getElementById('blog-container');
@@ -38,7 +38,7 @@ fetch('articles.txt')
       const elementType = isTitle ? 'h2' : 'p';
       const element = document.createElement(elementType);
 
-      element.textContent = article.trim();
+      element.innerHTML = article.trim().replace(/\n/g, '<br>'); // Preserve line breaks
 
       // Add click event to toggle content visibility
       if (isTitle) {
