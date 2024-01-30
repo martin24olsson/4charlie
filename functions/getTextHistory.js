@@ -8,7 +8,7 @@ exports.handler = async function () {
         await client.connect();
 
         const database = client.db("cluster"); // Replace with your database name
-        const collection = database.collection("texts"); // Replace with your collection name
+        const collection = database.collection("texts"); // Replace with your collection na
 
         const textHistory = await collection.find().toArray();
 
