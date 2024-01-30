@@ -43,14 +43,17 @@ fetch('articles.txt')
     // Create HTML for each article
     const blogContainer = document.getElementById('blog-container');
     articleArray.forEach((article, index) => {
-      const isTitle = index % 2 === 0;
-      const elementType = isTitle ? 'h2' : 'p';
+      const elementType = index % 2 === 0 ? 'h2' : 'p'; // Alternating between 'h2' and 'p'
       const element = document.createElement(elementType);
+
+      if (index % 2 === 0) {
+        article = '**' + article; // Add two asterisks to the beginning of each title
+      }
 
       element.innerHTML = article.trim().replace(/\n/g, '<br>'); // Preserve line breaks
 
       // Add click event to toggle content visibility
-      if (isTitle) {
+      if (index % 2 === 0) {
         element.classList.add('article-title');
         element.addEventListener('click', () => {
           const content = element.nextElementSibling;
