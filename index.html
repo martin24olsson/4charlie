@@ -3,55 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read Articles</title>
+    <title>Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .article {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .article h2 {
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-    <h1>Articles</h1>
-    <ul id="articleList"></ul>
+    <h1>My Blog</h1>
+    <div id="blogPosts"></div>
 
     <script>
-        // JavaScript code to dynamically fetch and display articles
+        // JavaScript code to dynamically fetch and display blog posts
 
-        // Function to fetch and display articles
-        function fetchAndDisplayArticles() {
-            // Creating a new XMLHttpRequest object
+        function fetchAndDisplayBlogPosts() {
             var xhttp = new XMLHttpRequest();
-
-            // Handling the state change of the request
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    // On successful response, parse and display articles
-                    displayArticles(this.responseText);
+                    displayBlogPosts(this.responseText);
                 }
             };
-
-            // Open a GET request to "articles.txt"
             xhttp.open("GET", "articles.txt", true);
-
-            // Send the request
             xhttp.send();
         }
 
-        // Function to parse and display articles
-        function displayArticles(articlesText) {
-            // Clear the existing list
-            var articleList = document.getElementById('articleList');
-            articleList.innerHTML = '';
+        function displayBlogPosts(postsText) {
+            var blogPostsContainer = document.getElementById('blogPosts');
+            blogPostsContainer.innerHTML = '';
 
-            // Split the content of "articles.txt" into an array of articles
-            var articlesArray = articlesText.split('\n');
+            var postsArray = postsText.split('\n\n');
+            
+            postsArray.forEach(function(post, index) {
+                var postDiv = document.createElement('div');
+                postDiv.className = 'article';
 
-            // Loop through the articles and create <li> elements to display them
-            for (var i = 0; i < articlesArray.length; i++) {
-                var article = articlesArray[i];
-                var listItem = document.createElement('li');
-                listItem.textContent = article;
-                articleList.appendChild(listItem);
-            }
+                var postTitle = document.createElement('h2');
+                postTitle.textContent = 'Post ' + (index + 1);
+
+                var postContent = document.createElement('p');
+                postContent.textContent = post;
+
+                postDiv.appendChild(postTitle);
+                postDiv.appendChild(postContent);
+
+                blogPostsContainer.appendChild(postDiv);
+            });
         }
 
-        // Call the function to fetch and display articles when the page loads
-        window.onload = fetchAndDisplayArticles;
+        window.onload = fetchAndDisplayBlogPosts;
     </script>
 </body>
 </html>
