@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect('your_mongodb_connection_string', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://martin24olsson:<password>@cluster0.xjlnu6l.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
 // Replace 'your_mongodb_connection_string' with your actual MongoDB connection string
 
 const articleSchema = new mongoose.Schema({
