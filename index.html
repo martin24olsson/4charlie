@@ -1,60 +1,23 @@
-<!-- Your existing HTML content -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple MongoDB App</title>
+</head>
+<body>
+  <h1>Simple MongoDB App</h1>
+  <form id="textForm">
+    <label for="text">Enter Text:</label>
+    <input type="text" id="text" name="text" required>
+    <button type="button" onclick="saveText()">Save</button>
+  </form>
 
-<script>
-    const form = document.getElementById('articleForm');
-    const articleContentInput = document.getElementById('articleContent');
-    const articleListDiv = document.getElementById('articleList');
+  <div id="output">
+    <h2>Saved Text:</h2>
+    <p id="savedText"></p>
+  </div>
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const password = '980724'; // You may consider using a more secure method for handling passwords
-        const articleContent = articleContentInput.value;
-
-        fetch('/post-article', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ password, articleContent }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            if (data.message === 'Article posted successfully!') {
-                loadArticles();
-                articleContentInput.value = '';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-
-    function loadArticles() {
-        fetch('/get-articles')
-        .then(response => response.json())
-        .then(data => {
-            displayArticles(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    function displayArticles(articles) {
-        articleListDiv.innerHTML = '';
-
-        articles.forEach(article => {
-            const articleDiv = document.createElement('div');
-            articleDiv.classList.add('article');
-
-            articleDiv.innerHTML = `<p><strong>${article.timestamp}</strong></p><p>${article.content}</p>`;
-
-            articleListDiv.appendChild(articleDiv);
-        });
-    }
-
-    window.addEventListener('load', loadArticles);
-</script>
-
-<!-- Rest of your HTML content -->
+  <script src="app.js"></script>
+</body>
+</html>
