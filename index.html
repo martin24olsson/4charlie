@@ -42,28 +42,26 @@ fetch('articles.txt')
 
     // Create HTML for each article
     const blogContainer = document.getElementById('blog-container');
+    let currentTitle = null;
+
     articleArray.forEach((article, index) => {
-      const elementType = index % 2 === 0 ? 'h2' : 'p'; // Alternating between 'h2' and 'p'
-      const element = document.createElement(elementType);
-
       if (index % 2 === 0) {
-        article = '**' + article; // Add two asterisks to the beginning of each title
-      }
-
-      element.innerHTML = article.trim().replace(/\n/g, '<br>'); // Preserve line breaks
-
-      // Add click event to toggle content visibility
-      if (index % 2 === 0) {
-        element.classList.add('article-title');
-        element.addEventListener('click', () => {
-          const content = element.nextElementSibling;
+        // Title
+        currentTitle = document.createElement('h2');
+        currentTitle.classList.add('article-title');
+        currentTitle.innerHTML = `**${article.trim()}**`; // Add two asterisks to the beginning of the title
+        currentTitle.addEventListener('click', () => {
+          const content = currentTitle.nextElementSibling;
           content.classList.toggle('active');
         });
+        blogContainer.appendChild(currentTitle);
       } else {
-        element.classList.add('article-content');
+        // Text body
+        const content = document.createElement('p');
+        content.classList.add('article-content');
+        content.innerHTML = article.trim().replace(/\n/g, '<br>'); // Preserve line breaks
+        currentTitle.nextElementSibling = content; // Attach the content to the title
       }
-
-      blogContainer.appendChild(element);
     });
   })
   .catch(error => console.error('Error fetching articles:', error));
