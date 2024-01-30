@@ -5,4 +5,4 @@ ExampleTitle2
 Here goes the content of the second article. You can add any text or information relevant to your articles.
 
 Three basic rules for life success
-<h1> Don't </h1>
+Charlie
