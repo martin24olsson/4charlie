@@ -24,11 +24,20 @@
         .article h2 {
             color: #007bff;
         }
+
+        #newPostInput {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>My Blog</h1>
     <div id="blogPosts"></div>
+    
+    <div>
+        <input type="text" id="newPostInput" placeholder="Enter your article">
+        <button onclick="postArticle()">Post</button>
+    </div>
 
     <script>
         // JavaScript code to dynamically fetch and display blog posts
@@ -65,6 +74,27 @@
 
                 blogPostsContainer.appendChild(postDiv);
             });
+        }
+
+        function postArticle() {
+            var newPostInput = document.getElementById('newPostInput');
+            var articleContent = newPostInput.value;
+
+            if (articleContent.trim() !== '') {
+                // Append the new article content to articles.txt
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Refresh the displayed blog posts
+                        fetchAndDisplayBlogPosts();
+                        // Clear the text field after posting
+                        newPostInput.value = '';
+                    }
+                };
+                xhttp.open("POST", "post_article.php", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("content=" + encodeURIComponent(articleContent));
+            }
         }
 
         window.onload = fetchAndDisplayBlogPosts;
