@@ -2,52 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h2 {
-            cursor: pointer;
-            color: #3498db;
-        }
-
-        .post-content {
-            display: none;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
 
+<div id="blog-container"></div>
+
 <script>
-    // Function to toggle the visibility of post content
-    function toggleContent(postId) {
-        var content = document.getElementById(postId);
-        content.style.display = (content.style.display === 'none') ? 'block' : 'none';
-    }
+// Read articles from the "articles.txt" file using fetch API
+fetch('articles.txt')
+  .then(response => response.text())
+  .then(articles => {
+    // Split articles using asterisk (*) as separator
+    const articleArray = articles.split('*').filter(Boolean);
 
-    // Splitting articles from the articles.txt file
-    var articlesText = `* ExampleTitle1\nThis is the content of the first article. It can contain multiple lines of text providing information or details about a particular topic.\n*\n* ExampleTitle2\nHere goes the content of the second article. You can add any text or information relevant to your articles.\n*\n* Tre grundläggande regler för framgång\nSälj aldrig något du inte skulle vilja köpa själv\nCharlie Munger artikulerade en gång att det lättaste sättet att få vad du vill ha är att förtjäna vad du vill ha. Det är en så enkel idé. För att förtjäna vad du vill ha så bör du också skapa och jobba på produkter av sådan kvalité att du själv vill köpa den.\n\nArbeta endast för människor du beundrar\nDet är inte alltid lätt att arbeta för människor du beundrar. Men motsatsen kan vara farlig. Charlie Munger hävdar att han försökt förflytta sig bort från arbetsledare han ogillar, vanligtvis utan att kritisera dem, för att kunna söka upp människor som han är motiverad att arbeta för.\n\nArbeta med människor du tycker om\nCharlie Munger observerar att han kan prestera väl på en rad områden när han tvingar sig till det. Men för att utmärka sig inom ett område så krävs ett intensivt fokus och intresse. Det blir lättare för att nå framgång.\n\nMed dessa tre enkla levnadsregler har den numera framlidne Charlie Munger levt ett långt och framgångsrikt liv.\n\nKälla https://www.cnbc.com/2023/11/29/charlie-munger-these-basic-career-rules-made-me-successful-in-life-with-warren-buffett-i-had-all-3.html\n*\n*\nTre tips för föräldrar som Munger vill att hans barn ska minnas till sin hundraårsdag\nDessa tipsen.`;
-    
-    var posts = articlesText.split('*');
-    
-    for (var i = 0; i < posts.length; i++) {
-        var post = posts[i].trim();
-        if (post !== '') {
-            var lines = post.split('\n');
-            var title = lines[0].trim();
-            var content = lines.slice(1).join('<br>').trim(); // Use <br> for line breaks
-            var postId = 'post_' + i;
-
-            document.write('<h2 onclick="toggleContent(\'' + postId + '\')">' + title + '</h2>');
-            document.write('<div id="' + postId + '" class="post-content">' + content + '</div>');
-        }
-    }
+    // Create HTML for each article
+    const blogContainer = document.getElementById('blog-container');
+    articleArray.forEach((article, index) => {
+      const isTitle = index % 2 === 0;
+      const elementType = isTitle ? 'h2' : 'p';
+      const element = document.createElement(elementType);
+      element.textContent = article.trim();
+      blogContainer.appendChild(element);
+    });
+  })
+  .catch(error => console.error('Error fetching articles:', error));
 </script>
 
 </body>
