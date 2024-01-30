@@ -13,11 +13,13 @@
         <button type="button" onclick="saveText()">Save</button>
     </form>
     <div id="result"></div>
+    <h2>Saved Texts:</h2>
+    <ul id="history"></ul>
 
     <script>
         function saveText() {
             var text = document.getElementById("textInput").value;
-            fetch('/save', {
+            fetch('/.netlify/functions/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,11 +29,25 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById("result").innerText = "Text saved successfully!";
+                fetchHistory();
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         }
-    </script>
-</body>
-</html>
+
+        function fetchHistory() {
+            fetch('/.netlify/functions/save', {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                const historyList = document.getElementById("history");
+                historyList.innerHTML = "";
+                data.savedTexts.forEach(savedText => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = savedText;
+                    historyList.appendChild(listItem);
+                });
+            })
+            .catch(error
