@@ -1,114 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-        }
-        .article {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<h1>Article Page</h1>
-
-<form id="articleForm">
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <label for="articleContent">Article:</label>
-    <textarea id="articleContent" name="articleContent" required></textarea>
-    <br>
-    <input type="submit" value="Post Article">
-</form>
-
-<div id="articleList"></div>
+<!-- Your existing HTML content -->
 
 <script>
-    const passwordInput = document.getElementById("password");
-    const form = document.getElementById("articleForm");
-    const articleContentInput = document.getElementById("articleContent");
-    const articleListDiv = document.getElementById("articleList");
+    const form = document.getElementById('articleForm');
+    const articleContentInput = document.getElementById('articleContent');
+    const articleListDiv = document.getElementById('articleList');
 
-    // Load articles from local storage when the page loads
-    window.addEventListener("load", loadArticles);
-
-    form.addEventListener("submit", function (event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
-        const password = passwordInput.value;
+        const password = '980724'; // You may consider using a more secure method for handling passwords
         const articleContent = articleContentInput.value;
 
-        if (password === "980724") {
-            postArticle(articleContent);
-        } else {
-            alert("Incorrect password. Please try again.");
-        }
+        fetch('/post-article', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ password, articleContent }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.message === 'Article posted successfully!') {
+                loadArticles();
+                articleContentInput.value = '';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
-    function postArticle(content) {
-        const currentDate = new Date();
-        const timestamp = currentDate.toLocaleString();
-
-        // Create an article object
-        const article = {
-            timestamp: timestamp,
-            content: content
-        };
-
-        // Save the article to local storage
-        saveArticle(article);
-
-        // Display the article on the page
-        displayArticle(article);
-
-        // Clear the form inputs
-        passwordInput.value = "";
-        articleContentInput.value = "";
-    }
-
-    function saveArticle(article) {
-        // Get existing articles from local storage or initialize an empty array
-        const existingArticles = JSON.parse(localStorage.getItem("articles")) || [];
-
-        // Add the new article to the array
-        existingArticles.push(article);
-
-        // Save the updated array back to local storage
-        localStorage.setItem("articles", JSON.stringify(existingArticles));
-    }
-
     function loadArticles() {
-        // Get articles from local storage
-        const existingArticles = JSON.parse(localStorage.getItem("articles")) || [];
-
-        // Display existing articles on the page
-        existingArticles.forEach(displayArticle);
+        fetch('/get-articles')
+        .then(response => response.json())
+        .then(data => {
+            displayArticles(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
-    function displayArticle(article) {
-        const articleDiv = document.createElement("div");
-        articleDiv.classList.add("article");
+    function displayArticles(articles) {
+        articleListDiv.innerHTML = '';
 
-        articleDiv.innerHTML = `<p><strong>${article.timestamp}</strong></p><p>${article.content}</p>`;
+        articles.forEach(article => {
+            const articleDiv = document.createElement('div');
+            articleDiv.classList.add('article');
 
-        articleListDiv.prepend(articleDiv);
+            articleDiv.innerHTML = `<p><strong>${article.timestamp}</strong></p><p>${article.content}</p>`;
+
+            articleListDiv.appendChild(articleDiv);
+        });
     }
+
+    window.addEventListener('load', loadArticles);
 </script>
 
-</body>
-</html>
+<!-- Rest of your HTML content -->
