@@ -42,26 +42,23 @@ fetch('articles.txt')
 
     // Create HTML for each article
     const blogContainer = document.getElementById('blog-container');
-    let currentTitle = null;
+    let isTitle = true; // First row is a title
 
     articleArray.forEach((article, index) => {
-      if (index % 2 === 0) {
-        // Title
-        currentTitle = document.createElement('h2');
-        currentTitle.classList.add('article-title');
-        currentTitle.innerHTML = `**${article.trim()}**`; // Add two asterisks to the beginning of the title
-        currentTitle.addEventListener('click', () => {
-          const content = currentTitle.nextElementSibling;
+      const element = document.createElement(isTitle ? 'h2' : 'p');
+      element.classList.add(isTitle ? 'article-title' : 'article-content');
+
+      element.innerHTML = article.trim().replace(/\n/g, '<br>'); // Preserve line breaks
+
+      if (isTitle) {
+        element.addEventListener('click', () => {
+          const content = element.nextElementSibling;
           content.classList.toggle('active');
         });
-        blogContainer.appendChild(currentTitle);
-      } else {
-        // Text body
-        const content = document.createElement('p');
-        content.classList.add('article-content');
-        content.innerHTML = article.trim().replace(/\n/g, '<br>'); // Preserve line breaks
-        currentTitle.nextElementSibling = content; // Attach the content to the title
       }
+
+      isTitle = !isTitle; // Toggle between title and content
+      blogContainer.appendChild(element);
     });
   })
   .catch(error => console.error('Error fetching articles:', error));
