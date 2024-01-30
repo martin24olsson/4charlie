@@ -1,13 +1,9 @@
-let savedTexts = [];
-
 exports.handler = async function (event, context) {
     try {
-        if (event.httpMethod === 'POST') {
-            const { text } = JSON.parse(event.body);
-            savedTexts.push(text);
+        if (event.httpMethod === 'GET') {
             return {
                 statusCode: 200,
-                body: JSON.stringify({ savedText: text }),
+                body: JSON.stringify({ savedTexts }),
             };
         } else {
             return {
