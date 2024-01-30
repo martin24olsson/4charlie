@@ -1,14 +1,8 @@
-Title 1
+ExampleTitle1
 This is the content of the first article. It can contain multiple lines of text providing information or details about a particular topic.
 
-Title 2
+ExampleTitle2
 Here goes the content of the second article. You can add any text or information relevant to your articles.
 
-Title 3
-The third article is here with its corresponding content. Feel free to customize the titles and content as needed for your use case.
-
-Title 4
-Testing
-
-Title 5
-this is a new post
+Three basic rules for life success
+<h1> Don't </h1>
