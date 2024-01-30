@@ -1,10 +1,4 @@
 **
-ExampleTitle1
-This is the content of the first article. It can contain multiple lines of text providing information or details about a particular topic.
-**
-ExampleTitle2
-Here goes the content of the second article. You can add any text or information relevant to your articles.
-**
 Tre grundläggande regler för framgång
 Sälj aldrig något du inte skulle vilja köpa själv
 Charlie Munger artikulerade en gång att det lättaste sättet att få vad du vill ha är att förtjäna vad du vill ha. Det är en så enkel idé. För att förtjäna vad du vill ha så bör du också skapa och jobba på produkter av sådan kvalité att du själv vill köpa den.
