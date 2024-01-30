@@ -1,53 +1,49 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
+// Connect to MongoDB
 mongoose.connect('mongodb+srv://martin24olsson:<password>@cluster0.xjlnu6l.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
-// Replace 'your_mongodb_connection_string' with your actual MongoDB connection string
 
-const articleSchema = new mongoose.Schema({
-    timestamp: String,
-    content: String
+// Define a MongoDB schema and model (e.g., TextFile)
+const textFileSchema = new mongoose.Schema({
+  content: String
 });
 
-const Article = mongoose.model('Article', articleSchema);
+const TextFile = mongoose.model('TextFile', textFileSchema);
 
-app.use(express.json());
+// Middleware for parsing JSON
+app.use(bodyParser.json());
 
-app.post('/post-article', async (req, res) => {
-    const { password, articleContent } = req.body;
+// API endpoint to save text
+app.post('/api/saveText', async (req, res) => {
+  const { content } = req.body;
 
-    if (password === '980724') {
-        const currentDate = new Date();
-        const timestamp = currentDate.toLocaleString();
-
-        const article = new Article({
-            timestamp: timestamp,
-            content: articleContent
-        });
-
-        try {
-            await article.save();
-            res.status(200).json({ message: 'Article posted successfully!' });
-        } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error' });
-        }
-    } else {
-        res.status(401).json({ message: 'Incorrect password. Please try again.' });
-    }
+  try {
+    // Save text to MongoDB
+    const textFile = new TextFile({ content });
+    await textFile.save();
+    res.status(201).json({ message: 'Text saved successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-app.get('/get-articles', async (req, res) => {
-    try {
-        const articles = await Article.find();
-        res.status(200).json(articles);
-    } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+// API endpoint to retrieve text
+app.get('/api/getText', async (req, res) => {
+  try {
+    // Retrieve text from MongoDB
+    const textFiles = await TextFile.find();
+    res.json(textFiles);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
