@@ -54,10 +54,10 @@ fetch('articles.txt')
         title.classList.add('article-title');
         content.classList.add('article-content');
 
-        const [articleTitle, articleContent] = article.split('\n');
+        const [articleTitle, ...articleContent] = article.split('\n');
 
         title.innerHTML = articleTitle.trim();
-        content.innerHTML = articleContent.trim().replace(/\n/g, '<br>');
+        content.innerHTML = articleContent.join('<br>').trim();
 
         title.addEventListener('click', () => {
           content.classList.toggle('active');
