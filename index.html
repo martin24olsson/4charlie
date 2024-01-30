@@ -37,7 +37,7 @@
         }
 
         function fetchHistory() {
-            fetch('/.netlify/functions/save', {
+            fetch('/.netlify/functions/history', { // Use a different endpoint for history
                 method: 'GET',
             })
             .then(response => response.json())
@@ -50,4 +50,10 @@
                     historyList.appendChild(listItem);
                 });
             })
-            .catch(error
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
