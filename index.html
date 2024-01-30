@@ -9,49 +9,49 @@
     <h1>Articles</h1>
     <ul id="articleList"></ul>
 
-<script>
-    // JavaScript code to read from "articles.txt" and display the content
+    <script>
+        // JavaScript code to dynamically fetch and display articles
 
-    // Function to fetch and display articles
-    function fetchAndDisplayArticles() {
-        // Creating a new XMLHttpRequest object
-        var xhttp = new XMLHttpRequest();
+        // Function to fetch and display articles
+        function fetchAndDisplayArticles() {
+            // Creating a new XMLHttpRequest object
+            var xhttp = new XMLHttpRequest();
 
-        // Handling the state change of the request
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                // On successful response, parse and display articles
-                displayArticles(this.responseText);
-            }
-        };
+            // Handling the state change of the request
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // On successful response, parse and display articles
+                    displayArticles(this.responseText);
+                }
+            };
 
-        // Open a GET request to "articles.txt"
-        xhttp.open("GET", "articles.txt", true);
+            // Open a GET request to "articles.txt"
+            xhttp.open("GET", "articles.txt", true);
 
-        // Send the request
-        xhttp.send();
-    }
-
-    // Function to parse and display articles
-    function displayArticles(articlesText) {
-        // Split the content of "articles.txt" into an array of articles
-        var articlesArray = articlesText.split('\n');
-
-        // Get the <ul> element where the articles will be displayed
-        var articleList = document.getElementById('articleList');
-
-        // Loop through the articles and create <li> elements to display them
-        for (var i = 0; i < articlesArray.length; i++) {
-            var article = articlesArray[i];
-            var listItem = document.createElement('li');
-            listItem.textContent = article;
-            articleList.appendChild(listItem);
+            // Send the request
+            xhttp.send();
         }
-    }
 
-    // Call the function to fetch and display articles when the page loads
-    window.onload = fetchAndDisplayArticles;
-</script>
+        // Function to parse and display articles
+        function displayArticles(articlesText) {
+            // Clear the existing list
+            var articleList = document.getElementById('articleList');
+            articleList.innerHTML = '';
 
+            // Split the content of "articles.txt" into an array of articles
+            var articlesArray = articlesText.split('\n');
+
+            // Loop through the articles and create <li> elements to display them
+            for (var i = 0; i < articlesArray.length; i++) {
+                var article = articlesArray[i];
+                var listItem = document.createElement('li');
+                listItem.textContent = article;
+                articleList.appendChild(listItem);
+            }
+        }
+
+        // Call the function to fetch and display articles when the page loads
+        window.onload = fetchAndDisplayArticles;
+    </script>
 </body>
 </html>
