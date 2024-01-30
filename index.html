@@ -24,10 +24,10 @@
 
         .article h2 {
             color: #007bff;
-            margin-bottom: 5px;
+            margin: 0;
         }
 
-        .article .text-body {
+        .article p {
             display: none;
         }
     </style>
@@ -35,12 +35,6 @@
 <body>
     <h1>My Blog</h1>
     <div id="blogPosts"></div>
-    
-    <div>
-        <input type="text" id="newPostTitle" placeholder="Enter post title">
-        <textarea id="newPostText" placeholder="Enter your article"></textarea>
-        <button onclick="postArticle()">Post</button>
-    </div>
 
     <script>
         // JavaScript code to dynamically fetch and display blog posts
@@ -63,51 +57,29 @@
             var postsArray = postsText.split('\n\n');
             
             postsArray.forEach(function(post, index) {
+                // Split post into title and body
+                var lines = post.split('\n');
+                var postTitle = lines[0];
+                var postBody = lines.slice(1).join('\n');
+
                 var postDiv = document.createElement('div');
                 postDiv.className = 'article';
-                postDiv.setAttribute('onclick', 'expandPost(this)');
 
-                var postTitle = document.createElement('h2');
-                postTitle.textContent = post.split('\n')[0];
+                var postTitleElement = document.createElement('h2');
+                postTitleElement.textContent = postTitle;
+                postDiv.appendChild(postTitleElement);
 
-                var postContent = document.createElement('div');
-                postContent.className = 'text-body';
-                postContent.textContent = post.substring(post.indexOf('\n') + 1);
-
-                postDiv.appendChild(postTitle);
+                var postContent = document.createElement('p');
+                postContent.textContent = postBody;
                 postDiv.appendChild(postContent);
+
+                postTitleElement.addEventListener('click', function() {
+                    // Toggle visibility of post content when the title is clicked
+                    postContent.style.display = postContent.style.display === 'none' ? 'block' : 'none';
+                });
 
                 blogPostsContainer.appendChild(postDiv);
             });
-        }
-
-        function postArticle() {
-            var newPostTitleInput = document.getElementById('newPostTitle');
-            var newPostTextInput = document.getElementById('newPostText');
-            var articleTitle = newPostTitleInput.value.trim();
-            var articleText = newPostTextInput.value.trim();
-
-            if (articleTitle !== '' && articleText !== '') {
-                // Append the new article content to articles.txt
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        // Refresh the displayed blog posts
-                        fetchAndDisplayBlogPosts();
-                        // Clear the input fields after posting
-                        newPostTitleInput.value = '';
-                        newPostTextInput.value = '';
-                    }
-                };
-                xhttp.open("POST", "post_article.php", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("title=" + encodeURIComponent(articleTitle) + "&content=" + encodeURIComponent(articleText));
-            }
-        }
-
-        function expandPost(postDiv) {
-            var textBody = postDiv.querySelector('.text-body');
-            textBody.style.display = (textBody.style.display === 'none' || textBody.style.display === '') ? 'block' : 'none';
         }
 
         window.onload = fetchAndDisplayBlogPosts;
