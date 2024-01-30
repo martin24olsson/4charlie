@@ -1,112 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+function displayBlogPosts(postsText) {
+    var blogPostsContainer = document.getElementById('blogPosts');
+    blogPostsContainer.innerHTML = '';
 
-        body.full-screen {
-            overflow: hidden;
-        }
+    var postsArray = postsText.split('\n\n');
+    
+    postsArray.forEach(function(post, index) {
+        // Split post into title and body
+        var lines = post.split('\n');
+        var postTitle = lines[0];
+        var postBody = lines.slice(1).join('\n');
 
-        h1 {
-            color: #333;
-        }
+        var postDiv = document.createElement('div');
+        postDiv.className = 'article';
 
-        .article {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            cursor: pointer;
-        }
+        var postTitleElement = document.createElement('h2');
+        postTitleElement.textContent = postTitle;
+        postDiv.appendChild(postTitleElement);
 
-        .article h2 {
-            color: #007bff;
-            margin: 0;
-        }
+        var postContent = document.createElement('p');
+        postContent.textContent = postBody;
+        postDiv.appendChild(postContent);
 
-        .article p {
-            display: none;
-        }
+        // Handle subtitles and blank spaces within the post
+        lines.slice(1).forEach(function(line) {
+            if (line.startsWith('h1')) {
+                var subtitleElement = document.createElement('h3');
+                subtitleElement.textContent = line.substring(2); // Exclude the 'h1' prefix
+                postDiv.appendChild(subtitleElement);
+            } else if (line.startsWith('b1')) {
+                var blankSpaceElement = document.createElement('div');
+                blankSpaceElement.className = 'blank-space';
+                postDiv.appendChild(blankSpaceElement);
+            }
+        });
 
-        .article.full-screen {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+        postTitleElement.addEventListener('click', function() {
+            // Toggle visibility of post content when the title is clicked
+            postContent.style.display = postContent.style.display === 'none' ? 'block' : 'none';
+        });
 
-        .article.full-screen h2 {
-            font-family: Georgia, serif;
-        }
-
-        .article.full-screen p {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <h1>My Blog</h1>
-    <div id="blogPosts"></div>
-
-    <script>
-        // JavaScript code to dynamically fetch and display blog posts
-
-        function fetchAndDisplayBlogPosts() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    displayBlogPosts(this.responseText);
-                }
-            };
-            xhttp.open("GET", "articles.txt", true);
-            xhttp.send();
-        }
-
-        function displayBlogPosts(postsText) {
-            var blogPostsContainer = document.getElementById('blogPosts');
-            blogPostsContainer.innerHTML = '';
-
-            var postsArray = postsText.split('\n\n');
-            
-            postsArray.forEach(function(post, index) {
-                // Split post into title and body
-                var lines = post.split('\n');
-                var postTitle = lines[0];
-                var postBody = lines.slice(1).join('\n');
-
-                var postDiv = document.createElement('div');
-                postDiv.className = 'article';
-
-                var postTitleElement = document.createElement('h2');
-                postTitleElement.textContent = postTitle;
-                postDiv.appendChild(postTitleElement);
-
-                var postContent = document.createElement('p');
-                postContent.textContent = postBody;
-                postDiv.appendChild(postContent);
-
-                postTitleElement.addEventListener('click', function() {
-                    // Toggle visibility of post content when the title is clicked
-                    postDiv.classList.toggle('full-screen');
-                    document.body.classList.toggle('full-screen');
-                });
-
-                blogPostsContainer.appendChild(postDiv);
-            });
-        }
-
-        window.onload = fetchAndDisplayBlogPosts;
-    </script>
-</body>
-</html>
+        blogPostsContainer.appendChild(postDiv);
+    });
+}
