@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text File Editor</title>
+    <title>Text Saver</title>
 </head>
 <body>
-    <h1>Text File Editor</h1>
-    
-    <form id="textForm">
-        <label for="textInput">Enter Text:</label>
-        <textarea id="textInput" name="text"></textarea>
-        <br>
-        <button type="button" onclick="saveText()">Save Text</button>
-    </form>
+    <h1>Text Saver</h1>
+    <textarea id="text-input" placeholder="Enter text..."></textarea>
+    <button onclick="saveText()">Save Text</button>
 
-    <div id="displayArea"></div>
+    <h2>Text History</h2>
+    <ul id="history-list"></ul>
 
-    <h2>Saved Texts:</h2>
-    <ul id="savedTexts"></ul>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="script.js"></script>
+    <script src="/scripts/main.js"></script>
 </body>
 </html>
