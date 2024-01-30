@@ -50,7 +50,7 @@ fetch('articles.txt')
       title.classList.add('article-title');
       content.classList.add('article-content');
 
-      title.innerHTML = `**${articleArray[i].trim()}**`; // Add two asterisks to the beginning of the title
+      title.innerHTML = articleArray[i].trim();
       content.innerHTML = articleArray[i + 1].trim().replace(/\n/g, '<br>'); // Preserve line breaks
 
       title.addEventListener('click', () => {
