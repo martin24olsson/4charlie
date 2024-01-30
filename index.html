@@ -3,57 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Saver</title>
+    <title>Text File Editor</title>
 </head>
 <body>
-    <h1>Text Saver</h1>
+    <h1>Text File Editor</h1>
+    
     <form id="textForm">
         <label for="textInput">Enter Text:</label>
-        <input type="text" id="textInput" name="textInput" required>
-        <button type="button" onclick="saveText()">Save</button>
+        <textarea id="textInput" name="text"></textarea>
+        <br>
+        <button type="button" onclick="saveText()">Save Text</button>
     </form>
-    <div id="result"></div>
-    <h2>Saved Texts:</h2>
-    <ul id="history"></ul>
 
-    <script>
-        function saveText() {
-            var text = document.getElementById("textInput").value;
-            fetch('/.netlify/functions/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ text: text }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("result").innerText = "Text saved successfully!";
-                fetchHistory();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+    <div id="displayArea"></div>
 
-        function fetchHistory() {
-            fetch('/.netlify/functions/history', { // Use a different endpoint for history
-                method: 'GET',
-            })
-            .then(response => response.json())
-            .then(data => {
-                const historyList = document.getElementById("history");
-                historyList.innerHTML = "";
-                data.savedTexts.forEach(savedText => {
-                    const listItem = document.createElement("li");
-                    listItem.textContent = savedText;
-                    historyList.appendChild(listItem);
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
