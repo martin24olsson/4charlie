@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
+    <style>
+        .article-content {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .article-content.active {
+            display: block;
+        }
+
+        .article-title {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -23,7 +37,20 @@ fetch('articles.txt')
       const isTitle = index % 2 === 0;
       const elementType = isTitle ? 'h2' : 'p';
       const element = document.createElement(elementType);
+
       element.textContent = article.trim();
+
+      // Add click event to toggle content visibility
+      if (isTitle) {
+        element.classList.add('article-title');
+        element.addEventListener('click', () => {
+          const content = element.nextElementSibling;
+          content.classList.toggle('active');
+        });
+      } else {
+        element.classList.add('article-content');
+      }
+
       blogContainer.appendChild(element);
     });
   })
