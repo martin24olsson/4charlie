@@ -4,5 +4,8 @@ This is the content of the first article. It can contain multiple lines of text 
 ExampleTitle2
 Here goes the content of the second article. You can add any text or information relevant to your articles.
 
-Three basic rules for life success
-Charlienew
+Tre grundläggande regler för framgång
+Sälj aldrig något du inte skulle vilja köpa själv
+Charlie Munger
+*
+Källa https://www.cnbc.com/2023/11/29/charlie-munger-these-basic-career-rules-made-me-successful-in-life-with-warren-buffett-i-had-all-3.html
