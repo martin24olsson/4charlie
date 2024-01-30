@@ -19,14 +19,16 @@
             padding: 10px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
+            cursor: pointer;
         }
 
         .article h2 {
             color: #007bff;
+            margin-bottom: 5px;
         }
 
-        #newPostInput {
-            margin-bottom: 10px;
+        .article .text-body {
+            display: none;
         }
     </style>
 </head>
@@ -35,7 +37,8 @@
     <div id="blogPosts"></div>
     
     <div>
-        <input type="text" id="newPostInput" placeholder="Enter your article">
+        <input type="text" id="newPostTitle" placeholder="Enter post title">
+        <textarea id="newPostText" placeholder="Enter your article"></textarea>
         <button onclick="postArticle()">Post</button>
     </div>
 
@@ -62,12 +65,14 @@
             postsArray.forEach(function(post, index) {
                 var postDiv = document.createElement('div');
                 postDiv.className = 'article';
+                postDiv.setAttribute('onclick', 'expandPost(this)');
 
                 var postTitle = document.createElement('h2');
-                postTitle.textContent = 'Post ' + (index + 1);
+                postTitle.textContent = post.split('\n')[0];
 
-                var postContent = document.createElement('p');
-                postContent.textContent = post;
+                var postContent = document.createElement('div');
+                postContent.className = 'text-body';
+                postContent.textContent = post.substring(post.indexOf('\n') + 1);
 
                 postDiv.appendChild(postTitle);
                 postDiv.appendChild(postContent);
@@ -77,24 +82,32 @@
         }
 
         function postArticle() {
-            var newPostInput = document.getElementById('newPostInput');
-            var articleContent = newPostInput.value;
+            var newPostTitleInput = document.getElementById('newPostTitle');
+            var newPostTextInput = document.getElementById('newPostText');
+            var articleTitle = newPostTitleInput.value.trim();
+            var articleText = newPostTextInput.value.trim();
 
-            if (articleContent.trim() !== '') {
+            if (articleTitle !== '' && articleText !== '') {
                 // Append the new article content to articles.txt
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         // Refresh the displayed blog posts
                         fetchAndDisplayBlogPosts();
-                        // Clear the text field after posting
-                        newPostInput.value = '';
+                        // Clear the input fields after posting
+                        newPostTitleInput.value = '';
+                        newPostTextInput.value = '';
                     }
                 };
                 xhttp.open("POST", "post_article.php", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("content=" + encodeURIComponent(articleContent));
+                xhttp.send("title=" + encodeURIComponent(articleTitle) + "&content=" + encodeURIComponent(articleText));
             }
+        }
+
+        function expandPost(postDiv) {
+            var textBody = postDiv.querySelector('.text-body');
+            textBody.style.display = (textBody.style.display === 'none' || textBody.style.display === '') ? 'block' : 'none';
         }
 
         window.onload = fetchAndDisplayBlogPosts;
