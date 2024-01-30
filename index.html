@@ -2,111 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+    <title>My Blog</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
 
-        body.full-screen {
-            overflow: hidden;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .article {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+        h2 {
             cursor: pointer;
+            color: #3498db;
         }
 
-        .article h2 {
-            color: #007bff;
-            margin: 0;
-        }
-
-        .article p {
+        .post-content {
             display: none;
-        }
-
-        .article.full-screen {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .article.full-screen h2 {
-            font-family: Georgia, serif;
-        }
-
-        .article.full-screen p {
-            display: block;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>My Blog</h1>
-    <div id="blogPosts"></div>
 
-    <script>
-        // JavaScript code to dynamically fetch and display blog posts
+<script>
+    // Function to toggle the visibility of post content
+    function toggleContent(postId) {
+        var content = document.getElementById(postId);
+        content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+    }
+</script>
 
-        function fetchAndDisplayBlogPosts() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    displayBlogPosts(this.responseText);
-                }
-            };
-            xhttp.open("GET", "articles.txt", true);
-            xhttp.send();
+<?php
+    $articles = file_get_contents('articles.txt');
+    $posts = explode('*', $articles);
+
+    foreach ($posts as $index => $post) {
+        $post = trim($post);
+        if ($post !== '') {
+            $lines = explode("\n", $post);
+            $title = trim($lines[0]);
+            $content = implode("\n", array_slice($lines, 1));
+            $postId = 'post_' . $index;
+
+            echo '<h2 onclick="toggleContent(\'' . $postId . '\')">' . $title . '</h2>';
+            echo '<div id="' . $postId . '" class="post-content">' . $content . '</div>';
         }
+    }
+?>
 
-        function displayBlogPosts(postsText) {
-            var blogPostsContainer = document.getElementById('blogPosts');
-            blogPostsContainer.innerHTML = '';
-
-            var postsArray = postsText.split('-\n'); // Split posts using the hyphen and newline
-
-            postsArray.forEach(function(post, index) {
-                // Split post into title and body
-                var lines = post.split('\n');
-                var postTitle = lines[0];
-                var postBody = lines.slice(2).join('\n'); // Start from the third line to skip the blank line
-
-                var postDiv = document.createElement('div');
-                postDiv.className = 'article';
-
-                var postTitleElement = document.createElement('h2');
-                postTitleElement.textContent = postTitle;
-                postDiv.appendChild(postTitleElement);
-
-                var postContent = document.createElement('p');
-                postContent.textContent = postBody;
-                postDiv.appendChild(postContent);
-
-                postTitleElement.addEventListener('click', function() {
-                    // Toggle visibility of post content when the title is clicked
-                    postDiv.classList.toggle('full-screen');
-                    document.body.classList.toggle('full-screen');
-                });
-
-                blogPostsContainer.appendChild(postDiv);
-            });
-        }
-
-        window.onload = fetchAndDisplayBlogPosts;
-    </script>
 </body>
 </html>
