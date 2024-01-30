@@ -2,12 +2,12 @@ const { MongoClient } = require('mongodb');
 
 exports.handler = async function () {
     try {
-        const uri = "YOUR_MONGODB_URI"; // Replace with your MongoDB connection string
+        const uri = "mongodb+srv://martin24olsson:<password>@cluster0.xjlnu6l.mongodb.net/"; // Replace with your MongoDB connection string
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
         await client.connect();
 
-        const database = client.db("YOUR_DATABASE_NAME"); // Replace with your database name
+        const database = client.db("cluster"); // Replace with your database name
         const collection = database.collection("texts"); // Replace with your collection name
 
         const textHistory = await collection.find().toArray();
